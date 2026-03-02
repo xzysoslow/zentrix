@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>coming soon</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #ffffff;
+      font-family: 'Gamja Flower', cursive;
+      color: #111;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      text-align: center;
+      padding: 1rem;
+    }
+
+    .container {
+      max-width: 900px;
+      width: 100%;
+    }
+
+    h1 {
+      font-size: clamp(4rem, 18vw, 8rem);
+      font-weight: 400;
+      letter-spacing: 0.02em;
+      margin-bottom: 1.5rem;
+      line-height: 1.1;
+      text-align: center;
+    }
+
+    .timer {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.5rem 2.5rem;
+      margin: 2rem 0 1rem;
+    }
+
+    .time-part {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 100px;
+    }
+
+    .number {
+      font-size: clamp(3.5rem, 12vw, 5.5rem);
+      line-height: 1;
+      color: #1b1b1b;
+    }
+
+    .label {
+      font-size: 1.6rem;
+      color: #444;
+      margin-top: 0.2rem;
+    }
+
+    .live-message {
+      font-size: 3rem;
+      color: #2b5e42;
+      padding: 1rem;
+    }
+
+    @media (max-width: 450px) {
+      .timer { gap: 1rem; }
+      .time-part { min-width: 70px; }
+      .label { font-size: 1.3rem; }
+      h1 { margin-bottom: 1rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>coming soon</h1>
+    <div id="timer" class="timer"></div>
+  </div>
+
+  <script>
+    (function() {
+
+      const target = new Date(2026, 2, 9).getTime(); 
+      
+      const timerEl = document.getElementById('timer');
+
+      function update() {
+        const now = new Date().getTime();
+        const diff = target - now;
+
+        if (diff <= 0) {
+          timerEl.innerHTML = '<div class="live-message">⋆ live ⋆</div>';
+          return;
+        }
+
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const minutes = Math.floor((diff / (1000 * 60)) % 60);
+        const seconds = Math.floor((diff / 1000) % 60);
+
+        const pad = (n) => n.toString().padStart(2, '0');
+
+        timerEl.innerHTML = `
+          <div class="time-part"><span class="number">${days}</span><span class="label">days</span></div>
+          <div class="time-part"><span class="number">${pad(hours)}</span><span class="label">hours</span></div>
+          <div class="time-part"><span class="number">${pad(minutes)}</span><span class="label">minutes</span></div>
+          <div class="time-part"><span class="number">${pad(seconds)}</span><span class="label">seconds</span></div>
+        `;
+      }
+
+      update();
+      setInterval(update, 1000);
+    })();
+  </script>
+</body>
+</html>
